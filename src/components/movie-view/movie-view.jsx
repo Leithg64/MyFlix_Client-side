@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import "./movie-view.scss"
 
 export const MovieView = ({ movie, onBackClick }) => {
+  console.log("movie", movie);
     return (
       <div>
         <div>
@@ -18,7 +19,6 @@ export const MovieView = ({ movie, onBackClick }) => {
         <div>
           <span>Genre: </span>
           <span>{movie.genre}</span>
-          <span>{genre.description}</span>
         </div>
         <div>
           <img src={movie.image} />
@@ -26,7 +26,6 @@ export const MovieView = ({ movie, onBackClick }) => {
         <div>
           <span>Director: </span>
           <span>{movie.director}</span>
-          <span>{director.bio}</span>
         </div>
         <button 
         onClick={onBackClick}

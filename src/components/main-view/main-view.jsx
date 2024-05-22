@@ -17,34 +17,34 @@ export const MainView = () => {
 
   useEffect(() => {
     console.log("hello");
-  
+
     if (!token) {
       return;
     }
-  
+
     fetch("https://myflixparttwo-bcd374c2380d.herokuapp.com/movies", {
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then((response) => response.json()) // Correctly handling the response JSON
+      .then((response) => response.json())
       .then((data) => {
-        console.log("response", data); // Moved inside the correct .then
-        const moviesFromApi = data.movies.map((movie) => {
-          return {
-            id: movie._id,
-            image: movie.ImgPath,
-            title: movie.Title,
-            genre: movie.Genre,
-            description: movie.Description,
-            director: movie.Director,
-          };
-        });
+        console.log("response", data);
+
+        const moviesFromApi = data.map((movie) => ({
+          id: movie._id,
+          image: movie.ImgPath,
+          title: movie.Title,
+          genre: movie.Genre.Name, // Ensure genre is a string
+          description: movie.Description,
+          director: movie.Director.Name, // Ensure director is a string
+        }));
+
         localStorage.setItem("movies", JSON.stringify(moviesFromApi));
         setMovies(moviesFromApi);
       })
       .catch((error) => {
         console.error("Error fetching movies:", error);
       });
-  
+
     console.log("hello");
   }, [token]);
   

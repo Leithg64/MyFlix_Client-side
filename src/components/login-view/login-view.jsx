@@ -31,6 +31,7 @@ fetch("https://myflixparttwo-bcd374c2380d.herokuapp.com/login", {
 })
 .then((data) => {
   console.log('Login successful:', data);
+  localStorage.setItem("token", data.token)
   onLoggedIn(data.user); // Pass the user data instead of just the username
 })
 .catch((error) => {

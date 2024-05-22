@@ -27396,19 +27396,16 @@ const MainView = ()=>{
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then((response)=>response.json()) // Correctly handling the response JSON
-        .then((data)=>{
-            console.log("response", data); // Moved inside the correct .then
-            const moviesFromApi = data.movies.map((movie)=>{
-                return {
+        }).then((response)=>response.json()).then((data)=>{
+            console.log("response", data);
+            const moviesFromApi = data.map((movie)=>({
                     id: movie._id,
                     image: movie.ImgPath,
                     title: movie.Title,
-                    genre: movie.Genre,
+                    genre: movie.Genre.Name,
                     description: movie.Description,
-                    director: movie.Director
-                };
-            });
+                    director: movie.Director.Name
+                }));
             localStorage.setItem("movies", JSON.stringify(moviesFromApi));
             setMovies(moviesFromApi);
         }).catch((error)=>{
@@ -30716,6 +30713,7 @@ var _col = require("react-bootstrap/Col");
 var _colDefault = parcelHelpers.interopDefault(_col);
 var _movieViewScss = require("./movie-view.scss");
 const MovieView = ({ movie, onBackClick })=>{
+    console.log("movie", movie);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -30724,20 +30722,20 @@ const MovieView = ({ movie, onBackClick })=>{
                         children: "Title: "
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 11,
+                        lineNumber: 12,
                         columnNumber: 11
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
                         children: movie.title
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 12,
+                        lineNumber: 13,
                         columnNumber: 11
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 10,
+                lineNumber: 11,
                 columnNumber: 9
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -30746,20 +30744,20 @@ const MovieView = ({ movie, onBackClick })=>{
                         children: "Description: "
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 15,
+                        lineNumber: 16,
                         columnNumber: 11
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
                         children: movie.description
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 16,
+                        lineNumber: 17,
                         columnNumber: 11
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 14,
+                lineNumber: 15,
                 columnNumber: 9
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -30768,18 +30766,11 @@ const MovieView = ({ movie, onBackClick })=>{
                         children: "Genre: "
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 19,
-                        columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: movie.genre
-                    }, void 0, false, {
-                        fileName: "src/components/movie-view/movie-view.jsx",
                         lineNumber: 20,
                         columnNumber: 11
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: genre.description
+                        children: movie.genre
                     }, void 0, false, {
                         fileName: "src/components/movie-view/movie-view.jsx",
                         lineNumber: 21,
@@ -30788,7 +30779,7 @@ const MovieView = ({ movie, onBackClick })=>{
                 ]
             }, void 0, true, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 18,
+                lineNumber: 19,
                 columnNumber: 9
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -30819,13 +30810,6 @@ const MovieView = ({ movie, onBackClick })=>{
                         fileName: "src/components/movie-view/movie-view.jsx",
                         lineNumber: 28,
                         columnNumber: 11
-                    }, undefined),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
-                        children: director.bio
-                    }, void 0, false, {
-                        fileName: "src/components/movie-view/movie-view.jsx",
-                        lineNumber: 29,
-                        columnNumber: 11
                     }, undefined)
                 ]
             }, void 0, true, {
@@ -30842,13 +30826,13 @@ const MovieView = ({ movie, onBackClick })=>{
                 children: "Back"
             }, void 0, false, {
                 fileName: "src/components/movie-view/movie-view.jsx",
-                lineNumber: 31,
+                lineNumber: 30,
                 columnNumber: 9
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/movie-view/movie-view.jsx",
-        lineNumber: 9,
+        lineNumber: 10,
         columnNumber: 7
     }, undefined);
 };
@@ -31130,6 +31114,7 @@ const LoginView = ({ onLoggedIn })=>{
             });
         }).then((data)=>{
             console.log("Login successful:", data);
+            localStorage.setItem("token", data.token);
             onLoggedIn(data.user); // Pass the user data instead of just the username
         }).catch((error)=>{
             console.error("Login failed:", error);
@@ -31141,14 +31126,14 @@ const LoginView = ({ onLoggedIn })=>{
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 44,
+                lineNumber: 45,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
                 children: "Login to your account"
             }, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 45,
+                lineNumber: 46,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -31158,7 +31143,7 @@ const LoginView = ({ onLoggedIn })=>{
                         children: "Username:"
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 47,
+                        lineNumber: 48,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -31169,18 +31154,18 @@ const LoginView = ({ onLoggedIn })=>{
                         minLength: "3"
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 48,
+                        lineNumber: 49,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 46,
+                lineNumber: 47,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 56,
+                lineNumber: 57,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Group, {
@@ -31190,7 +31175,7 @@ const LoginView = ({ onLoggedIn })=>{
                         children: "Password:"
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 59,
+                        lineNumber: 60,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formDefault.default).Control, {
@@ -31200,18 +31185,18 @@ const LoginView = ({ onLoggedIn })=>{
                         required: true
                     }, void 0, false, {
                         fileName: "src/components/login-view/login-view.jsx",
-                        lineNumber: 60,
+                        lineNumber: 61,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 58,
+                lineNumber: 59,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 67,
+                lineNumber: 68,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
@@ -31220,13 +31205,13 @@ const LoginView = ({ onLoggedIn })=>{
                 children: "Submit"
             }, void 0, false, {
                 fileName: "src/components/login-view/login-view.jsx",
-                lineNumber: 68,
+                lineNumber: 69,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/login-view/login-view.jsx",
-        lineNumber: 43,
+        lineNumber: 44,
         columnNumber: 5
     }, undefined);
 };
