@@ -30886,7 +30886,7 @@ const SignupView = ()=>{
             Birthday: isoDate,
             Password: password
         };
-        fetch("(https://myflixparttwo-bcd374c2380d.herokuapp.com/users)", {
+        fetch("https://myflixparttwo-bcd374c2380d.herokuapp.com/users", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
