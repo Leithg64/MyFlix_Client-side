@@ -16,15 +16,18 @@ export const MainView = () => {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
+    console.log("hello");
+  
     if (!token) {
       return;
     }
+  
     fetch("https://myflixparttwo-bcd374c2380d.herokuapp.com/movies", {
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then((response) => response.json())
+      .then((response) => response.json()) // Correctly handling the response JSON
       .then((data) => {
-        console.log("data", data);
+        console.log("response", data); // Moved inside the correct .then
         const moviesFromApi = data.movies.map((movie) => {
           return {
             id: movie._id,
@@ -37,8 +40,14 @@ export const MainView = () => {
         });
         localStorage.setItem("movies", JSON.stringify(moviesFromApi));
         setMovies(moviesFromApi);
+      })
+      .catch((error) => {
+        console.error("Error fetching movies:", error);
       });
+  
+    console.log("hello");
   }, [token]);
+  
 
   return (
     <Row className="justify-content-md-center">
