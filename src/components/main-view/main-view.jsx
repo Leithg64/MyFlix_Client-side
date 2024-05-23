@@ -31,11 +31,12 @@ export const MainView = () => {
 
         const moviesFromApi = data.map((movie) => ({
           id: movie._id,
-          image: movie.ImgPath,
+          image: movie.ImagePath,
           title: movie.Title,
           genre: movie.Genre.Name, // Ensure genre is a string
           description: movie.Description,
           director: movie.Director.Name, // Ensure director is a string
+          actors: movie.Actors
         }));
 
         localStorage.setItem("movies", JSON.stringify(moviesFromApi));
