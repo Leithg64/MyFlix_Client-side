@@ -15,11 +15,8 @@ export const MainView = () => {
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
-  const [query, setQuery] = useState("");
 
   useEffect(() => {
-    console.log("hello");
 
     if (!token) {
       return;
@@ -48,8 +45,6 @@ export const MainView = () => {
       .catch((error) => {
         console.error("Error fetching movies:", error);
       });
-
-    console.log("hello");
   }, [token]);
   
 
@@ -59,6 +54,8 @@ export const MainView = () => {
         user={user}
         onLoggedOut={() => {
           setUser(null);
+          setToken(null);
+          localStorage.clear();
         }}
       />
       <Row className="justify-content-md-center">
@@ -92,7 +89,7 @@ export const MainView = () => {
             }
           />
           <Route
-            path="/movies/:MovieId"
+            path="/movies/:movieId"
             element={
               <>
                 {!user ? (
@@ -119,7 +116,7 @@ export const MainView = () => {
                 ) : (
                   <>
                     {movies.map((movie) => (
-                      <Col className="mb-4" key={book.id} md={3}>
+                      <Col className="mb-4" key={movie.id} md={3}>
                         <MovieCard movie={movie} />
                       </Col>
                     ))}

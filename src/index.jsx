@@ -6,9 +6,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.scss";
 
 const MyFlixApplication = () => {
-  <Container>
-    <MainView />;
-  </Container>
+  return (
+    <Container>
+      <MainView />
+    </Container>
+  );
 };
 
 // Finds the root of your app
