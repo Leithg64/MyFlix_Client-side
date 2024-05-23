@@ -1,11 +1,16 @@
 import React from "react";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import Col from "react-bootstrap/Col";
+import { Button } from "react-bootstrap";
 
 import "./movie-view.scss"
 
-export const MovieView = ({ movie, onBackClick }) => {
-  console.log("movie", movie);
+export const MovieView = ({ movies }) => {
+  const { movieId } = useParams();
+
+  const movie = movies.find((m) => m.id === movieId);
+
     return (
       <div>
         <div>
@@ -31,13 +36,9 @@ export const MovieView = ({ movie, onBackClick }) => {
           <span>Actors: </span>
           <span>{movie.actors}</span>
         </div>
-        <button 
-        onClick={onBackClick}
-        className="back-button"
-        style={{ cursor: "pointer" }}
-        >
-          Back
-        </button>
+        <Link to={`/`}>
+          <Button className="back-button">Back</Button>
+        </Link>
       </div>
     );
 };
