@@ -78,17 +78,13 @@ export const MainView = () => {
           />
           <Route
             path="/profile"
-            element={
-              <>
-                {user ?  (
-                  <Navigate to="/profile-view/profile-view" />
-                ) : (
-                  <Col md={5}>
-                    <ProfileView token={token} />
-                  </Col>
-                )}
-              </>
-            }
+              element={
+                user ? (
+                  <ProfileView token={token} user={user} setUser={setUser} movies={movies} />
+                 ) : (
+                  <Navigate to="/login" />
+                )
+              }
           />
           <Route
             path="/login"
