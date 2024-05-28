@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
+import "./login-view.scss";
+
 export const LoginView = ({ onLoggedIn }) => {
 const [username, setUsername] = useState("");
 const [password, setPassword] = useState("");
@@ -43,7 +45,12 @@ fetch("https://myflixparttwo-bcd374c2380d.herokuapp.com/login", {
 return (
     <Form onSubmit={handleSubmit}>
       <br />
-      <h1>Login to your account</h1>
+      <div className="containerh1">
+      <h1 className="main-title">Welcome to SeaFlix</h1>
+      </div>
+      <br />
+      <h2>Login to your account</h2>
+      <br />
       <Form.Group controlId="formUsername">
         <Form.Label>Username:</Form.Label>
         <Form.Control

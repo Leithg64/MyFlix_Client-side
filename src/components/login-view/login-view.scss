@@ -1,0 +1,28 @@
+.containerh1 {
+    position: relative;
+    background-image: url('boat.png'); /* Replace 'your-image.jpg' with the path to your background image */
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    animation: wave 2s infinite ease-in-out; /* Apply the wave animation to the container */
+}
+
+.main-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes wave {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+

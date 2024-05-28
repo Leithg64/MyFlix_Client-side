@@ -3,22 +3,27 @@ import PropTypes from "prop-types";
 import { Card, Button } from 'react-bootstrap';
 import { Link } from "react-router-dom";
 
+import "./movie-card.scss"
+
 export const MovieCard = ({ movie, isFavorite, onFavoriteToggle }) => {
   return (
-    <Card className="h-100">
+    <div className="whole-card">
+      <Card className="h-100">
       <Card.Img variant="top" src={movie.image} />
       <Card.Body>
         <Card.Title>{movie.title}</Card.Title>
         <Card.Text>{movie.director}</Card.Text>
         <Card.Text>{movie.genre}</Card.Text>
         <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
-          <Button variant="link">Open</Button>
+          <Button variant="primary">Open</Button>
         </Link>
+        <br />
         <Button variant="primary" onClick={onFavoriteToggle}>
           {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
         </Button>
       </Card.Body>
     </Card>
+    </div>
   );
 };
 
