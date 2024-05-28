@@ -10,6 +10,8 @@ import { Row, Col } from "react-bootstrap/";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
 
+import "./main-view.scss";
+
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
