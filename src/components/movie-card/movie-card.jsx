@@ -11,24 +11,24 @@ export const MovieCard = ({ movie, isFavorite, onFavoriteToggle }) => {
         <Card.Title>{movie.title}</Card.Title>
         <Card.Text>{movie.director}</Card.Text>
         <Card.Text>{movie.genre}</Card.Text>
-        <Button onClick={onFavoriteToggle}>
-          {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
-        </Button>
         <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
           <Button variant="link">Open</Button>
         </Link>
+        <Button variant="primary" onClick={onFavoriteToggle}>
+          {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
+        </Button>
       </Card.Body>
     </Card>
   );
 };
 
 MovieCard.propTypes = {
+  isFavorite: PropTypes.bool.isRequired,
+  onFavoriteToggle: PropTypes.func.isRequired,
   movie: PropTypes.shape({
     title: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     genre: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired
-  }).isRequired,
-  isFavorite: PropTypes.bool.isRequired,
-  onFavoriteToggle: PropTypes.func.isRequired
+  }).isRequired
 };

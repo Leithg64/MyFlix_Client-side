@@ -6,9 +6,9 @@ import { SignupView } from "../signup-view/signup-view";
 import { ProfileView } from '../profile-view/profile-view';
 import { useNavigate } from "react-router-dom";
 import { NavigationBar } from "../navigation-bar/navigation-bar";
-import {Row, Col} from "react-bootstrap/";
+import { Row, Col } from "react-bootstrap/";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
+import axios from "axios";
 
 export const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -19,7 +19,6 @@ export const MainView = () => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-
     if (!token) {
       return;
     }
@@ -29,8 +28,6 @@ export const MainView = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("response", data);
-
         const moviesFromApi = data.map((movie) => ({
           id: movie._id,
           image: movie.ImagePath,
@@ -38,7 +35,7 @@ export const MainView = () => {
           genre: movie.Genre.Name, // Ensure genre is a string
           description: movie.Description,
           director: movie.Director.Name, // Ensure director is a string
-          actors: movie.Actors
+          actors: movie.Actors,
         }));
 
         localStorage.setItem("movies", JSON.stringify(moviesFromApi));
@@ -48,6 +45,33 @@ export const MainView = () => {
         console.error("Error fetching movies:", error);
       });
   }, [token]);
+
+  const handleFavoriteToggle = (movieId) => {
+    console.log("Toggling favorite for movie ID:", movieId);
+    console.log("Current user:", user);
+    console.log("FavoriteMovies:", user.FavoriteMovies);
+  
+    const isFavorite = user.FavoriteMovies.includes(movieId);
+    const method = isFavorite ? "delete" : "post";
+    const url = `https://myflixparttwo-bcd374c2380d.herokuapp.com/users/${user.Username}/movies/${movieId}`;
+  
+    console.log(`Making ${method.toUpperCase()} request to URL:`, url);
+  
+    axios({
+      method: method,
+      url: url,
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    .then((response) => {
+      console.log("Updated user data:", response.data);
+      const updatedUser = { ...user, FavoriteMovies: response.data.FavoriteMovies };
+      setUser(updatedUser);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+    })
+    .catch((error) => {
+      console.error("Error updating favorites:", error);
+    });
+  };
   
 
   return (
@@ -78,13 +102,20 @@ export const MainView = () => {
           />
           <Route
             path="/profile"
-              element={
-                user ? (
-                  <ProfileView token={token} user={user} setUser={setUser} movies={movies} />
-                 ) : (
+            element={
+              <>
+                {user ? (
+                  <ProfileView
+                    token={token}
+                    movies={movies}
+                    user={user}
+                    setUser={setUser}
+                  />
+                ) : (
                   <Navigate to="/login" />
-                )
-              }
+                )}
+              </>
+            }
           />
           <Route
             path="/login"
@@ -129,7 +160,11 @@ export const MainView = () => {
                   <>
                     {movies.map((movie) => (
                       <Col className="mb-4" key={movie.id} md={3}>
-                        <MovieCard movie={movie} />
+                        <MovieCard
+                          movie={movie}
+                          isFavorite={user.FavoriteMovies.includes(movie.id)}
+                          onFavoriteToggle={() => handleFavoriteToggle(movie.id)}
+                        />
                       </Col>
                     ))}
                   </>

@@ -1,8 +1,7 @@
-// src/components/profile-view/profile-view.jsx
 import React, { useState, useEffect } from "react";
 import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { MovieCard } from "../movie-card/movie-card";
 
 export const ProfileView = ({ token, movies, user, setUser }) => {
   const [favoriteMovies, setFavoriteMovies] = useState([]);
@@ -10,7 +9,7 @@ export const ProfileView = ({ token, movies, user, setUser }) => {
     Username: user.Username,
     Password: "",
     Email: user.Email,
-    Birthday: user.Birthday.split("T")[0] // Ensure proper date format
+    Birthday: user.Birthday.split("T")[0], // Ensure proper date format
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -23,6 +22,8 @@ export const ProfileView = ({ token, movies, user, setUser }) => {
 
   const handleUpdate = (event) => {
     event.preventDefault();
+    setError(""); // Reset error state
+    setSuccess(""); // Reset success state
     axios
       .put(
         `https://myflixparttwo-bcd374c2380d.herokuapp.com/users/${user.Username}`,
@@ -35,7 +36,7 @@ export const ProfileView = ({ token, movies, user, setUser }) => {
       })
       .catch((error) => {
         setError("Failed to update profile");
-        console.error(error);
+        console.error("Error updating profile:", error);
       });
   };
 
@@ -52,31 +53,36 @@ export const ProfileView = ({ token, movies, user, setUser }) => {
       })
       .catch((error) => {
         setError("Failed to deregister");
-        console.error(error);
+        console.error("Error deregistering:", error);
       });
   };
 
   const handleFavoriteToggle = (movieId) => {
     const isFavorite = user.FavoriteMovies.includes(movieId);
+    const url = `https://myflixparttwo-bcd374c2380d.herokuapp.com/users/${user.Username}/movies/${movieId}`;
+
     axios
       .put(
-        `https://myflixparttwo-bcd374c2380d.herokuapp.com/users/${user.Username}/movies/${movieId}`,
+        url,
         {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-          data: isFavorite ? { method: "remove" } : { method: "add" },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((response) => {
         const updatedUser = { ...user, FavoriteMovies: response.data.FavoriteMovies };
         setUser(updatedUser);
+        localStorage.setItem("user", JSON.stringify(updatedUser));
         setFavoriteMovies(
           movies.filter((m) => updatedUser.FavoriteMovies.includes(m.id))
+        );
+        setSuccess(
+          isFavorite
+            ? "Movie removed from favorites"
+            : "Movie added to favorites"
         );
       })
       .catch((error) => {
         setError("Failed to update favorites");
-        console.error(error);
+        console.error("Error updating favorites:", error);
       });
   };
 
@@ -148,15 +154,19 @@ export const ProfileView = ({ token, movies, user, setUser }) => {
         </Card>
         <h2 className="mt-4">Favorite Movies</h2>
         <Row>
-          {favoriteMovies.map((movie) => (
-            <Col className="mb-4" key={movie.id} md={3}>
-              <MovieCard
-                movie={movie}
-                onFavoriteToggle={() => handleFavoriteToggle(movie.id)}
-                isFavorite={user.FavoriteMovies.includes(movie.id)}
-              />
-            </Col>
-          ))}
+          {favoriteMovies.length > 0 ? (
+            favoriteMovies.map((movie) => (
+              <Col className="mb-4" key={movie.id} md={3}>
+                <MovieCard
+                  movie={movie}
+                  onFavoriteToggle={() => handleFavoriteToggle(movie.id)}
+                  isFavorite={true} // Always true in this context
+                />
+              </Col>
+            ))
+          ) : (
+            <Col>No favorite movies to display</Col>
+          )}
         </Row>
       </Col>
     </Row>
