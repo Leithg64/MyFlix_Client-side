@@ -19,6 +19,7 @@ export const MainView = () => {
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
   const [movies, setMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
 
   useEffect(() => {
     if (!token) {
@@ -34,38 +35,43 @@ export const MainView = () => {
           id: movie._id,
           image: movie.ImagePath,
           title: movie.Title,
-          genre: movie.Genre.Name, // Ensure genre is a string
+          genre: movie.Genre.Name,
           description: movie.Description,
-          director: movie.Director.Name, // Ensure director is a string
+          director: movie.Director.Name,
           actors: movie.Actors,
         }));
 
         localStorage.setItem("movies", JSON.stringify(moviesFromApi));
         setMovies(moviesFromApi);
+        setFilteredMovies(moviesFromApi); // Initialize filteredMovies with all movies
       })
       .catch((error) => {
         console.error("Error fetching movies:", error);
       });
   }, [token]);
 
+  const handleSearch = (searchTerm) => {
+    if (searchTerm === '') {
+      setFilteredMovies(movies); // Reset to full movie list
+    } else {
+      const filtered = movies.filter((movie) =>
+        movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredMovies(filtered);
+    }
+  };
+
   const handleFavoriteToggle = (movieId) => {
-    console.log("Toggling favorite for movie ID:", movieId);
-    console.log("Current user:", user);
-    console.log("FavoriteMovies:", user.FavoriteMovies);
-  
     const isFavorite = user.FavoriteMovies.includes(movieId);
     const method = isFavorite ? "delete" : "post";
     const url = `https://myflixparttwo-bcd374c2380d.herokuapp.com/users/${user.Username}/movies/${movieId}`;
-  
-    console.log(`Making ${method.toUpperCase()} request to URL:`, url);
-  
+
     axios({
       method: method,
       url: url,
       headers: { Authorization: `Bearer ${token}` }
     })
     .then((response) => {
-      console.log("Updated user data:", response.data);
       const updatedUser = { ...user, FavoriteMovies: response.data.FavoriteMovies };
       setUser(updatedUser);
       localStorage.setItem("user", JSON.stringify(updatedUser));
@@ -74,7 +80,6 @@ export const MainView = () => {
       console.error("Error updating favorites:", error);
     });
   };
-  
 
   return (
     <BrowserRouter>
@@ -85,6 +90,7 @@ export const MainView = () => {
           setToken(null);
           localStorage.clear();
         }}
+        onSearch={handleSearch} // Pass handleSearch to NavigationBar
       />
       <Row className="justify-content-md-center">
         <Routes>
@@ -127,7 +133,10 @@ export const MainView = () => {
                   <Navigate to="/" />
                 ) : (
                   <Col md={5}>
-                    <LoginView onLoggedIn={(user) => setUser(user)} />
+                    <LoginView onLoggedIn={(user) => {
+                      setUser(user);
+                      setToken(localStorage.getItem("token"));
+                    }} />
                   </Col>
                 )}
               </>
@@ -149,18 +158,17 @@ export const MainView = () => {
               </>
             }
           />
-
           <Route
             path="/"
             element={
               <>
                 {!user ? (
                   <Navigate to="/login" replace />
-                ) : movies.length === 0 ? (
+                ) : filteredMovies.length === 0 ? (
                   <Col>The list is empty!</Col>
                 ) : (
                   <>
-                    {movies.map((movie) => (
+                    {filteredMovies.map((movie) => (
                       <Col className="mb-4" key={movie.id} md={3}>
                         <MovieCard
                           movie={movie}

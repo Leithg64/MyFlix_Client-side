@@ -3,6 +3,8 @@ import { Button, Form, Card, Col, Row } from "react-bootstrap";
 import axios from "axios";
 import { MovieCard } from "../movie-card/movie-card";
 
+import "./profile-view.scss";
+
 export const ProfileView = ({ token, movies, user, setUser }) => {
   const [favoriteMovies, setFavoriteMovies] = useState([]);
   const [updateUser, setUpdateUser] = useState({
@@ -87,14 +89,14 @@ export const ProfileView = ({ token, movies, user, setUser }) => {
   };
 
   return (
-    <Row className="justify-content-md-center">
+    <Row className="justify-content-md-center" md={4}>
       <Col md={8}>
-        <Card>
+        <Card className="profile-card">
           <Card.Body>
             <Card.Title>Profile</Card.Title>
             {error && <div className="alert alert-danger">{error}</div>}
             {success && <div className="alert alert-success">{success}</div>}
-            <Form onSubmit={handleUpdate}>
+            <Form onSubmit={handleUpdate} className="profile-form">
               <Form.Group controlId="formUsername">
                 <Form.Label>Username:</Form.Label>
                 <Form.Control
@@ -139,13 +141,13 @@ export const ProfileView = ({ token, movies, user, setUser }) => {
                   required
                 />
               </Form.Group>
-              <Button variant="primary" type="submit" className="mt-3">
+              <Button variant="primary" type="submit" className="profile-button">
                 Update Profile
               </Button>
               <Button
                 variant="danger"
                 onClick={handleDeregister}
-                className="mt-3 ml-3"
+                className="profile-button"
               >
                 Deregister
               </Button>
@@ -156,7 +158,7 @@ export const ProfileView = ({ token, movies, user, setUser }) => {
         <Row>
           {favoriteMovies.length > 0 ? (
             favoriteMovies.map((movie) => (
-              <Col className="mb-4" key={movie.id} md={3}>
+              <Col className="mb-4" key={movie.id} md={4}>
                 <MovieCard
                   movie={movie}
                   onFavoriteToggle={() => handleFavoriteToggle(movie.id)}

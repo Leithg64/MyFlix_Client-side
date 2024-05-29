@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
+import "./signup-view.scss"
+
 export const SignupView = () => {
 const [username, setUsername] = useState("");
 const [email, setEmail] = useState("");
@@ -44,9 +46,11 @@ fetch("https://myflixparttwo-bcd374c2380d.herokuapp.com/users", {
 };
 
 return (
+  <div className="signup-form">
     <Form onSubmit={handleSubmit}>
       <br />
-      <h1> Create an account </h1>
+      <h1 className="signup-h1"> Create an Account: </h1>
+      <br />
       <Form.Group controlId="formUsername">
       <Form.Label>Username:</Form.Label>
       <Form.Control
@@ -91,5 +95,7 @@ return (
       <br />
       <Button variant="primary" type="submit"> Sign up </Button>
     </Form>
+  </div>
+    
   );
 }

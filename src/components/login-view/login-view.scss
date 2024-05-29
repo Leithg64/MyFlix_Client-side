@@ -8,10 +8,14 @@
 }
 
 .main-title {
+    font-family: "Sail";
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    font-size: 45px;
+    font-weight: bold;
+    text-align: center;
 }
 
 @keyframes wave {
@@ -26,3 +30,13 @@
     }
 }
 
+.login-title {
+    // font-family: "Sail";
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.login-form {
+    font-weight: bold;
+    font-size: 25px;
+}

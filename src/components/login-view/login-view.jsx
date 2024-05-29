@@ -49,7 +49,8 @@ return (
       <h1 className="main-title">Welcome to SeaFlix</h1>
       </div>
       <br />
-      <h2>Login to your account</h2>
+      <div className="login-form">
+      <h2 className="login-title">Login to your account: </h2>
       <br />
       <Form.Group controlId="formUsername">
         <Form.Label>Username:</Form.Label>
@@ -76,6 +77,8 @@ return (
       <Button variant="primary" type="submit">
         Submit
       </Button>
+      </div>
     </Form>
+      
   );
 };

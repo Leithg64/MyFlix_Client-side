@@ -1,4 +1,10 @@
 $primary: #F2D16B;
-$body-bg: #006ca5;
 
 @import '~bootstrap/scss/bootstrap.scss';
+
+body {
+    font-family: quicksand;
+    background: url("water-background.jpg");
+    background-attachment: fixed;
+    font-size: larger;
+}

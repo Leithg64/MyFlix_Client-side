@@ -12,32 +12,31 @@ export const MovieView = ({ movies }) => {
   const movie = movies.find((m) => m.id === movieId);
 
     return (
-      <div>
+      <div className="movie-close">
         <div>
-          <span>Title: </span>
+          <span className="title-elm">Title: </span>
           <span>{movie.title}</span>
         </div>
         <div>
-          <span>Genre: </span>
+          <span className="title-elm">Genre: </span>
           <span>{movie.genre}</span>
         </div>
         <div>
-          <span>Description: </span>
+          <span className="title-elm">Description: </span>
           <span>{movie.description}</span>
         </div>
         <div className="movie-poster">
           <img src={movie.image}/>
         </div>
         <div>
-          <span>Director: </span>
+          <span className="title-elm">Director: </span>
           <span>{movie.director}</span>
         </div>
         <div>
-          <span>Actors: </span>
+          <span className="title-elm">Actors: </span>
           <span>{movie.actors}</span>
         </div>
         <Link to={`/`}>
-          <br />
           <Button className="back-button">Back</Button>
           <br />
         </Link>

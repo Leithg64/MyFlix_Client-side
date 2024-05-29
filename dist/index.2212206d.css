@@ -41,7 +41,7 @@
   --bs-white-rgb: 255, 255, 255;
   --bs-black-rgb: 0, 0, 0;
   --bs-body-color-rgb: 33, 37, 41;
-  --bs-body-bg-rgb: 0, 108, 165;
+  --bs-body-bg-rgb: 255, 255, 255;
   --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   --bs-gradient: linear-gradient(180deg, #ffffff26, #fff0);
@@ -50,7 +50,7 @@
   --bs-body-font-weight: 400;
   --bs-body-line-height: 1.5;
   --bs-body-color: #212529;
-  --bs-body-bg: #006ca5;
+  --bs-body-bg: #fff;
   --bs-border-width: 1px;
   --bs-border-style: solid;
   --bs-border-color: #dee2e6;
@@ -586,7 +586,7 @@ progress {
 
 .img-thumbnail {
   border: 1px solid var(--bs-border-color);
-  background-color: #006ca5;
+  background-color: #fff;
   border-radius: .375rem;
   max-width: 100%;
   height: auto;
@@ -2133,7 +2133,7 @@ progress {
 .form-control {
   color: #212529;
   appearance: none;
-  background-color: #006ca5;
+  background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
   border-radius: .375rem;
@@ -2162,7 +2162,7 @@ progress {
 
 .form-control:focus {
   color: #212529;
-  background-color: #006ca5;
+  background-color: #fff;
   border-color: #f9e8b5;
   outline: 0;
   box-shadow: 0 0 0 .25rem #f2d16b40;
@@ -2297,7 +2297,7 @@ textarea.form-control-lg {
   -moz-padding-start: calc(.75rem - 3px);
   color: #212529;
   appearance: none;
-  background-color: #006ca5;
+  background-color: #fff;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
   background-position: right .75rem center;
   background-repeat: no-repeat;
@@ -2383,7 +2383,7 @@ textarea.form-control-lg {
   vertical-align: top;
   appearance: none;
   print-color-adjust: exact;
-  background-color: #006ca5;
+  background-color: #fff;
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -2509,11 +2509,11 @@ textarea.form-control-lg {
 }
 
 .form-range:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 1px #006ca5, 0 0 0 .25rem #f2d16b40;
+  box-shadow: 0 0 0 1px #fff, 0 0 0 .25rem #f2d16b40;
 }
 
 .form-range:focus::-moz-range-thumb {
-  box-shadow: 0 0 0 1px #006ca5, 0 0 0 .25rem #f2d16b40;
+  box-shadow: 0 0 0 1px #fff, 0 0 0 .25rem #f2d16b40;
 }
 
 .form-range::-moz-focus-outer {
@@ -3813,8 +3813,8 @@ textarea.form-control-lg {
   --bs-nav-tabs-border-radius: .375rem;
   --bs-nav-tabs-link-hover-border-color: #e9ecef #e9ecef #dee2e6;
   --bs-nav-tabs-link-active-color: #495057;
-  --bs-nav-tabs-link-active-bg: #006ca5;
-  --bs-nav-tabs-link-active-border-color: #dee2e6 #dee2e6 #006ca5;
+  --bs-nav-tabs-link-active-bg: #fff;
+  --bs-nav-tabs-link-active-border-color: #dee2e6 #dee2e6 #fff;
   border-bottom: var(--bs-nav-tabs-border-width) solid var(--bs-nav-tabs-border-color);
 }
 
@@ -4565,8 +4565,8 @@ textarea.form-control-lg {
 }
 
 .accordion {
-  --bs-accordion-color: #fff;
-  --bs-accordion-bg: #006ca5;
+  --bs-accordion-color: #000;
+  --bs-accordion-bg: #fff;
   --bs-accordion-transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, border-radius .15s ease;
   --bs-accordion-border-color: var(--bs-border-color);
   --bs-accordion-border-width: 1px;
@@ -12010,20 +12010,53 @@ textarea.form-control-lg {
   }
 }
 
+body {
+  background: url("water-background.2a67cea0.jpg") fixed;
+  font-family: quicksand;
+  font-size: larger;
+}
+
 .h-100 {
-  background-color: #0ff;
-  border: 4px solid #000;
+  color: #fff;
+  background-color: #00f;
+  border: 4px solid #add8e6;
   margin: 5px;
   padding: 10px;
+  line-height: 15px;
 }
 
 img {
-  border: 2px solid #000;
+  border: 2px solid #fff;
+}
+
+.whole-card {
+  height: 100%;
+}
+
+.card {
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  display: flex;
+}
+
+.card-body {
+  flex-direction: column;
+  flex-grow: 1;
+  display: flex;
+}
+
+.card-body .mt-auto {
+  margin-top: auto;
+}
+
+.card-buttons {
+  border: 3px solid #f7931d;
+  justify-items: center;
 }
 
 .back-button {
-  color: #f5f5f5;
-  background-color: #1e90ff;
+  background-color: #f2d16b;
   border: none;
   border-radius: 4px;
   padding: 4px 12px;
@@ -12032,6 +12065,20 @@ img {
 .movie-poster img {
   width: 100%;
   height: auto;
+}
+
+.title-elm {
+  font-weight: bolder;
+  text-decoration: underline;
+}
+
+.movie-close {
+  color: #fff;
+  background-color: #00f;
+  border: 4px solid #add8e6;
+  width: 100%;
+  padding: 10px;
+  font-size: 27px;
 }
 
 .containerh1 {
@@ -12044,6 +12091,10 @@ img {
 }
 
 .main-title {
+  text-align: center;
+  font-family: Sail;
+  font-size: 45px;
+  font-weight: bold;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -12064,9 +12115,48 @@ img {
   }
 }
 
+.login-title {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.login-form {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.signup-h1 {
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.signup-form {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.profile-button {
+  margin-top: 30px;
+  margin-left: 20px;
+}
+
+.profile-card {
+  height: 450px;
+  margin-top: 10px;
+}
+
 .nav-box {
   text-transform: uppercase;
   background-color: #f2d16b;
-  padding: 10px;
+  border: 5px solid #f7931d;
+  padding: 10px 10px 10px 30px;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.brand-title {
+  text-transform: none;
+  font-family: Sail;
+  font-size: 40px;
 }
 /*# sourceMappingURL=index.2212206d.css.map */
