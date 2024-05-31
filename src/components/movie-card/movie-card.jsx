@@ -8,7 +8,7 @@ import "./movie-card.scss"
 export const MovieCard = ({ movie, isFavorite, onFavoriteToggle }) => {
   return (
     <div className="whole-card">
-      <Card className="h-100">
+      <Card className="multi-card">
       <Card.Img variant="top" src={movie.image} />
       <Card.Body className="d-flex flex-column">
         <Card.Title>{movie.title}</Card.Title>
